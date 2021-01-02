@@ -10,6 +10,7 @@ import database from '@react-native-firebase/database';
 import Auth from '@react-native-firebase/auth';
 import CardUser from '../../components/CardUser';
 import LoadingPanel from '../../components/LoadingPanel';
+import {showMessage} from 'react-native-flash-message';
 
 const User = ({navigation}) => {
   const [data, setData] = useState([]);
@@ -40,8 +41,9 @@ const User = ({navigation}) => {
       .child(userId)
       .update({status: 'tidak-aktif'})
       .then(() => {
-        console.log('update');
+        // console.log('update');
         setLoading(false);
+        showMessage({message: 'Success deleted !', type: 'success'});
       })
       .catch((err) => console.log(err));
   };

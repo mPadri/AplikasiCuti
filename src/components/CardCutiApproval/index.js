@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import database from '@react-native-firebase/database';
 import Auth from '@react-native-firebase/auth';
+import {showMessage} from 'react-native-flash-message';
 
 const CardCutiApproval = ({
   nama,
@@ -73,7 +74,7 @@ const CardCutiApproval = ({
               .child(id)
               .update({status_cuti: 'UNAPPROVED'})
               .then(() => {
-                console.log('Rejected');
+                showMessage({message: 'Success rejected !', type: 'success'});
               })
               .catch((err) => console.log(err));
           },
@@ -98,7 +99,8 @@ const CardCutiApproval = ({
           .child(userId)
           .update({cutiTahunan: sisaCuti})
           .then(() => {
-            console.log('update');
+            // console.log('update');
+            showMessage({message: 'Success approved !', type: 'success'});
           })
           .catch((err) => console.log(err));
       })

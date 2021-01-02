@@ -10,6 +10,7 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import database from '@react-native-firebase/database';
 import Auth from '@react-native-firebase/auth';
+import {showMessage} from 'react-native-flash-message';
 
 const EditProfile = ({navigation}) => {
   const [dataUser, setDataUser] = useState({
@@ -72,8 +73,9 @@ const EditProfile = ({navigation}) => {
           changePassword(currentPassword, newPassword);
         }
         navigation.goBack();
-        console.log(currentPassword);
-        console.log(newPassword);
+        // console.log(currentPassword);
+        // console.log(newPassword);
+        showMessage({message: 'Success Updated', type: 'success'});
       })
       .catch((err) => console.log(err));
   };

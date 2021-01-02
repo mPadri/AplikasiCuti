@@ -12,6 +12,7 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import database from '@react-native-firebase/database';
 import Auth from '@react-native-firebase/auth';
+import {showMessage} from 'react-native-flash-message';
 
 const AjukanCuti = ({navigation}) => {
   const [selected, setSelected] = useState('Cuti Tahunan');
@@ -101,8 +102,9 @@ const AjukanCuti = ({navigation}) => {
       .set(data)
       .then(() => {
         navigation.goBack();
+        showMessage({message: 'Success !', type: 'success'});
       })
-      .catch((err) => console.log(err));
+      .catch((err) => showMessage({message: 'Failed !', type: 'danger'}));
   };
 
   const onSubmit = () => {

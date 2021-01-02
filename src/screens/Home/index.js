@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,6 +11,7 @@ import Auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import {useSelector} from 'react-redux';
 import LoadingPanel from '../../components/LoadingPanel';
+import {showMessage} from 'react-native-flash-message';
 
 const Home = ({navigation}) => {
   // const dataUser = useSelector((state) => {
@@ -48,7 +50,7 @@ const Home = ({navigation}) => {
             .child(currentUser.uid)
             .update({cutiTahunan: 12, expCuti: tahun})
             .then(() => {
-              console.log('update reset');
+              // console.log('update reset');
               // setUser(snapshot.val());
               getCurrentUser();
             })
@@ -62,30 +64,38 @@ const Home = ({navigation}) => {
   };
 
   const doSignOut = () => {
-    Auth()
-      .signOut()
-      .then(() => {
-        console.log('User signed out!');
-        navigation.replace('Login');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const resetCuti = (year) => {
-    let tahun = new Date().getFullYear();
-    if (year !== tahun) {
-      console.log('reset');
-    }
-    // database()
-    //   .ref(`/users/`)
-    //   .child(currentUser.uid)
-    //   .update({cutiTahunan: 12, expCuti: tahun})
-    //   .then(() => {
-    //     console.log('update');
-    //   })
-    //   .catch((err) => console.log(err));
+    Alert.alert(
+      'Log out',
+      'Apakah Anda Yakin ?',
+      [
+        {
+          text: 'Tidak',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {
+          text: 'Ya',
+          onPress: () => {
+            Auth()
+              .signOut()
+              .then(() => {
+                // console.log('User signed out!');
+                navigation.replace('Login');
+                showMessage({
+                  message: 'Anda telah signed out !',
+                  type: 'success',
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          },
+        },
+      ],
+      {
+        cancelable: false,
+      },
+    );
   };
 
   return (

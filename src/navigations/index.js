@@ -13,6 +13,8 @@ import CutiKaryawan from '../screens/CutiKaryawan';
 import ApprovalLeader from '../screens/ApprovalLeader';
 import ApprovalOpt from '../screens/ApprovalOpt';
 import AjukanCutiHamil from '../screens/AjukanCutiHamil';
+import Entypo from 'react-native-vector-icons/Entypo';
+import SplashScreen from '../screens/SplashScreen';
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -20,9 +22,33 @@ const Tabs = createBottomTabNavigator();
 const MainApp = () => {
   return (
     <Tabs.Navigator>
-      <Tabs.Screen name="Home" component={Home} />
-      <Tabs.Screen name="User" component={User} />
-      <Tabs.Screen name="Cuti" component={Cuti} />
+      <Tabs.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Entypo name="home" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="User"
+        component={User}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Entypo name="users" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Cuti"
+        component={Cuti}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Entypo name="calendar" size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs.Navigator>
   );
 };
@@ -30,22 +56,59 @@ const MainApp = () => {
 const StaffApp = () => {
   return (
     <Tabs.Navigator>
-      <Tabs.Screen name="Home" component={Home} />
-      <Tabs.Screen name="Cuti" component={Cuti} />
+      <Tabs.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Entypo name="home" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Cuti"
+        component={Cuti}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Entypo name="calendar" size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs.Navigator>
   );
 };
 const LeaderApp = () => {
   return (
     <Tabs.Navigator>
-      <Tabs.Screen name="Home" component={Home} />
-      <Tabs.Screen name="Cuti" component={Cuti} />
+      <Tabs.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Entypo name="home" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Cuti"
+        component={Cuti}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Entypo name="calendar" size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs.Navigator>
   );
 };
 const Navigation = () => {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="SplashScreen">
+      <Stack.Screen
+        name="SplashScreen"
+        component={SplashScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="MainApp"
         component={MainApp}

@@ -11,6 +11,7 @@ import {
 import database from '@react-native-firebase/database';
 import Auth from '@react-native-firebase/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {showMessage} from 'react-native-flash-message';
 
 const TambahUser = ({navigation}) => {
   const [dataUser, setDataUser] = useState({
@@ -59,6 +60,7 @@ const TambahUser = ({navigation}) => {
             };
             setDataUser(clearData);
             navigation.goBack();
+            showMessage({message: 'Success added !', type: 'success'});
           })
           .catch((err) => console.log(err));
       })

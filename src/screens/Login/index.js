@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Button, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import {getDataAction} from '../../redux/reducers/DataUser';
 import {useDispatch} from 'react-redux';
+import {showMessage} from 'react-native-flash-message';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -26,7 +27,11 @@ const Login = ({navigation}) => {
             const data = snapshot.val();
             console.log('doSignIn -> data', data.status);
             if (data.status == 'tidak-aktif') {
-              alert('Email atau Password salah');
+              // alert('Email atau Password salah');
+              showMessage({
+                message: 'Email atau Password salah !',
+                type: 'danger',
+              });
             }
             status = data.status;
             jabatan = data.jabatan;
@@ -40,16 +45,32 @@ const Login = ({navigation}) => {
             } else if (jabatan == 'Staff' && status == 'aktif') {
               setLoading(false);
               navigation.replace('StaffApp');
+              showMessage({
+                message: 'Success !',
+                type: 'success',
+              });
             } else if (jabatan == 'HRD' && status == 'aktif') {
               // dispatch(getDataAction({dataUser}));
               setLoading(false);
               navigation.replace('MainApp');
+              showMessage({
+                message: 'Success !',
+                type: 'success',
+              });
             } else if (jabatan == 'Leader' && status == 'aktif') {
               setLoading(false);
               navigation.replace('LeaderApp');
+              showMessage({
+                message: 'Success !',
+                type: 'success',
+              });
             } else if (jabatan == 'Operation' && status == 'aktif') {
               setLoading(false);
               navigation.replace('LeaderApp');
+              showMessage({
+                message: 'Success !',
+                type: 'success',
+              });
             }
           });
       })
