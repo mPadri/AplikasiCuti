@@ -19,7 +19,7 @@ const CardUser = ({nama, jabatan, sisaCuti, onPress}) => {
         <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
           <TouchableOpacity
             style={{
-              backgroundColor: 'red',
+              backgroundColor: '#CD9543',
               paddingVertical: 2,
               paddingHorizontal: 4,
               borderRadius: 5,

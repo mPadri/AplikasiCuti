@@ -19,7 +19,6 @@ const Home = ({navigation}) => {
   // });
 
   const [user, setUser] = useState('');
-  console.log('🚀 ~ file: index.js ~ line 20 ~ Home ~ user', user);
   const [loading, setLoading] = useState(true);
 
   const currentUser = Auth().currentUser;
@@ -50,8 +49,6 @@ const Home = ({navigation}) => {
             .child(currentUser.uid)
             .update({cutiTahunan: 12, expCuti: tahun})
             .then(() => {
-              // console.log('update reset');
-              // setUser(snapshot.val());
               getCurrentUser();
             })
             .catch((err) => console.log(err));
@@ -79,7 +76,6 @@ const Home = ({navigation}) => {
             Auth()
               .signOut()
               .then(() => {
-                // console.log('User signed out!');
                 navigation.replace('Login');
                 showMessage({
                   message: 'Anda telah signed out !',
@@ -176,7 +172,7 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
   btnEdit: {
-    backgroundColor: 'green',
+    backgroundColor: '#CD9543',
     width: '25%',
     padding: 4,
     borderRadius: 5,

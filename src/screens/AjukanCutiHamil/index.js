@@ -93,7 +93,7 @@ const AjukanCutiHamil = ({navigation}) => {
       jumlah_hari: 90,
       start_cuti: dateAwal,
       end_cuti: days,
-      status_cuti: 'PENDING',
+      status_cuti: 'PROCESSING',
       jenis_cuti: selected,
     };
 
@@ -191,7 +191,7 @@ const AjukanCutiHamil = ({navigation}) => {
       />
 
       <View style={{height: 10}} />
-      <Button title="SIMPAN" onPress={() => onSubmit()} />
+      <Button color="#CD9543" title="SIMPAN" onPress={() => onSubmit()} />
     </View>
   );
 };

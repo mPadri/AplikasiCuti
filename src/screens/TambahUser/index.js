@@ -27,44 +27,59 @@ const TambahUser = ({navigation}) => {
   });
 
   const tambahData = (email, password) => {
-    Auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((res) => {
-        console.log('tambahData -> res', res);
-        let tahun = new Date().getFullYear();
-        const data = {
-          nama: dataUser.nama,
-          jabatan: dataUser.jabatan,
-          dept: dataUser.dept,
-          jenis_kelamin: dataUser.jenis_kelamin,
-          cutiTahunan: dataUser.cutiTahunan,
-          status: dataUser.status,
-          _id: res.user.uid,
-          email: email,
-          expCuti: tahun,
-        };
-        database()
-          .ref(`/users/${res.user.uid}`)
-          .set(data)
-          .then((resDB) => {
-            const clearData = {
-              nama: '',
-              jabatan: '',
-              dept: '',
-              jenis_kelamin: 'Laki-laki',
-              cutiTahunan: '12',
-              status: 'aktif',
-              _id: '',
-              email: '',
-              password: '',
-            };
-            setDataUser(clearData);
-            navigation.goBack();
-            showMessage({message: 'Success added !', type: 'success'});
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
+    if (
+      dataUser.nama &&
+      dataUser.jabatan &&
+      dataUser.cutiTahunan &&
+      dataUser.email &&
+      dataUser.password
+    ) {
+      Auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((res) => {
+          let tahun = new Date().getFullYear();
+          const data = {
+            nama: dataUser.nama,
+            jabatan: dataUser.jabatan,
+            dept: dataUser.dept,
+            jenis_kelamin: dataUser.jenis_kelamin,
+            cutiTahunan: dataUser.cutiTahunan,
+            status: dataUser.status,
+            _id: res.user.uid,
+            email: email,
+            expCuti: tahun,
+          };
+          database()
+            .ref(`/users/${res.user.uid}`)
+            .set(data)
+            .then((resDB) => {
+              const clearData = {
+                nama: '',
+                jabatan: '',
+                dept: '',
+                jenis_kelamin: 'Laki-laki',
+                cutiTahunan: '12',
+                status: 'aktif',
+                _id: '',
+                email: '',
+                password: '',
+              };
+              setDataUser(clearData);
+              navigation.goBack();
+              showMessage({
+                message: 'Success added !',
+                type: 'success',
+              });
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    } else {
+      showMessage({
+        message: 'Silahkan Lengkapi Data Anda !',
+        type: 'danger',
+      });
+    }
   };
   return (
     <View style={{margin: 12}}>
@@ -155,6 +170,7 @@ const TambahUser = ({navigation}) => {
         <KeyboardAwareScrollView>
           <TextInput
             underlineColorAndroid="grey"
+            secureTextEntry={true}
             style={{
               padding: 4,
             }}
@@ -167,6 +183,7 @@ const TambahUser = ({navigation}) => {
 
         <View style={{height: 10}} />
         <Button
+          color="#CD9543"
           title="SIMPAN"
           onPress={() => tambahData(dataUser.email, dataUser.password)}
         />

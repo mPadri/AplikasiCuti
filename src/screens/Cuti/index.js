@@ -17,7 +17,6 @@ const Cuti = ({navigation}) => {
   const [userId, setUserId] = useState('');
   const [loading, setLoading] = useState(true);
   const [jabatan, setJabatan] = useState('');
-  console.log('🚀 ~ file: index.js ~ line 20 ~ Cuti ~ jabatan', jabatan);
   const user = Auth().currentUser;
   const isEmpty = data.length == 0;
 
@@ -45,7 +44,6 @@ const Cuti = ({navigation}) => {
     database()
       .ref('/cuti')
       .on('value', (snapshot) => {
-        console.log('cuti data: ', snapshot.val());
         const items = Array.from(Object.values(snapshot.val()));
         setData(items);
         setLoading(false);
@@ -58,7 +56,6 @@ const Cuti = ({navigation}) => {
       .once('value')
       .then((snapshot) => {
         let data = snapshot.val();
-        console.log('🚀 ~ file: index.js ~ line 60 ~ .then ~ data', data);
         setJabatan(data.jabatan);
       })
       .catch((err) => console.log(err));

@@ -42,7 +42,6 @@ const CutiKaryawan = ({navigation}) => {
     database()
       .ref('/cuti')
       .on('value', (snapshot) => {
-        console.log('cuti data: ', snapshot.val());
         const items = Array.from(Object.values(snapshot.val()));
         setData(items);
         setLoading(false);

@@ -44,7 +44,6 @@ const ApprovalLeader = ({navigation}) => {
     database()
       .ref('/cuti')
       .on('value', (snapshot) => {
-        console.log('cuti data: ', snapshot.val());
         const items = Array.from(Object.values(snapshot.val()));
         setData(items);
         setLoading(false);
@@ -57,7 +56,6 @@ const ApprovalLeader = ({navigation}) => {
       .once('value')
       .then((snapshot) => {
         let data = snapshot.val();
-        console.log('🚀 ~ file: index.js ~ line 59 ~ .then ~ data', data);
         setDept(data.dept);
       })
       .catch((err) => console.log(err));

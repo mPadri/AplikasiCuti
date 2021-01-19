@@ -68,13 +68,11 @@ const EditProfile = ({navigation}) => {
       .child(userId)
       .update(dataUser)
       .then(() => {
-        console.log('update');
         if (currentPassword !== '' && newPassword !== '') {
           changePassword(currentPassword, newPassword);
         }
         navigation.goBack();
-        // console.log(currentPassword);
-        // console.log(newPassword);
+
         showMessage({message: 'Success Updated', type: 'success'});
       })
       .catch((err) => console.log(err));
@@ -144,7 +142,11 @@ const EditProfile = ({navigation}) => {
       </KeyboardAwareScrollView>
 
       <View style={{height: 10}} />
-      <Button title="SIMPAN" onPress={() => updateUser(userId.uid)} />
+      <Button
+        color="#CD9543"
+        title="SIMPAN"
+        onPress={() => updateUser(userId.uid)}
+      />
     </View>
   );
 };

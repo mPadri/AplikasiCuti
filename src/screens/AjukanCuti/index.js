@@ -76,10 +76,18 @@ const AjukanCuti = ({navigation}) => {
       if (sisaCuti >= 0) {
         addCuti(days, sisaCuti);
       } else {
-        alert('cuti anda sudah habis');
+        // alert('cuti anda sudah habis');
+        showMessage({
+          message: 'Cuti anda sudah habis !',
+          type: 'danger',
+        });
       }
     } else {
-      alert('cuti anda tidak cukup');
+      // alert('cuti anda tidak cukup');
+      showMessage({
+        message: 'Cuti anda tidak cukup !',
+        type: 'danger',
+      });
     }
   };
 
@@ -93,7 +101,7 @@ const AjukanCuti = ({navigation}) => {
       jumlah_hari: days,
       start_cuti: dateAwal,
       end_cuti: dateAkhir,
-      status_cuti: 'PENDING',
+      status_cuti: 'PROCESSING',
       jenis_cuti: selected,
     };
 
@@ -187,17 +195,25 @@ const AjukanCuti = ({navigation}) => {
 
       <View style={{height: 12}} />
       <Text style={styles.title}>Jenis Cuti</Text>
-      <Picker
+      {/* <Picker
         note
         mode="dialog"
         selectedValue={selected}
         onValueChange={(value) => setSelected(value)}>
         <Picker.Item label="Cuti Tahunan" value="Cuti Tahunan" />
         <Picker.Item label="Cuti Hamil" value="Cuti Hamil" />
-      </Picker>
+      </Picker> */}
+      <TextInput
+        underlineColorAndroid="grey"
+        style={{
+          padding: 4,
+        }}
+        value={selected}
+        editable={false}
+      />
 
       <View style={{height: 10}} />
-      <Button title="SIMPAN" onPress={() => onSubmit()} />
+      <Button color="#CD9543" title="SIMPAN" onPress={() => onSubmit()} />
     </View>
   );
 };

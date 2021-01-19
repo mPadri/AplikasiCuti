@@ -71,7 +71,7 @@ const CardCuti = ({
             database()
               .ref(`/cuti/`)
               .child(id)
-              .update({status_cuti: 'UNAPPROVED'})
+              .update({status_cuti: 'REJECTED'})
               .then(() => {
                 console.log('Rejected');
               })
@@ -111,7 +111,6 @@ const CardCuti = ({
       .once('value')
       .then((snapshot) => {
         let data = snapshot.val();
-        console.log('🚀 ~ file: index.js ~ line 60 ~ .then ~ data', data);
         setJabatan(data.jabatan);
       })
       .catch((err) => console.log(err));
@@ -122,7 +121,17 @@ const CardCuti = ({
       <View style={styles.card}>
         <View style={styles.wrapTitle}>
           <Text>{nama}</Text>
-          <Text>{status}</Text>
+          <Text
+            style={{
+              color:
+                status == 'REJECTED'
+                  ? 'salmon'
+                  : status == 'PROCESSING'
+                  ? '#CD9543'
+                  : '#4e7c03',
+            }}>
+            {status}
+          </Text>
         </View>
         <Text style={styles.textDept}>{dept}</Text>
         <View style={styles.wrapCuti}>

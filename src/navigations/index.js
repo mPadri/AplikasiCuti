@@ -15,13 +15,14 @@ import ApprovalOpt from '../screens/ApprovalOpt';
 import AjukanCutiHamil from '../screens/AjukanCutiHamil';
 import Entypo from 'react-native-vector-icons/Entypo';
 import SplashScreen from '../screens/SplashScreen';
+import ForgotPassword from '../screens/ForgotPassword';
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 
 const MainApp = () => {
   return (
-    <Tabs.Navigator>
+    <Tabs.Navigator tabBarOptions={{activeTintColor: '#CD9543'}}>
       <Tabs.Screen
         name="Home"
         component={Home}
@@ -55,7 +56,7 @@ const MainApp = () => {
 
 const StaffApp = () => {
   return (
-    <Tabs.Navigator>
+    <Tabs.Navigator tabBarOptions={{activeTintColor: '#CD9543'}}>
       <Tabs.Screen
         name="Home"
         component={Home}
@@ -79,7 +80,7 @@ const StaffApp = () => {
 };
 const LeaderApp = () => {
   return (
-    <Tabs.Navigator>
+    <Tabs.Navigator tabBarOptions={{activeTintColor: '#CD9543'}}>
       <Tabs.Screen
         name="Home"
         component={Home}
@@ -127,11 +128,16 @@ const Navigation = () => {
       <Stack.Screen
         name="TambahUser"
         component={TambahUser}
-        options={{headerShown: false}}
+        options={{headerShown: true, title: 'Tambah Akun'}}
       />
       <Stack.Screen
         name="Login"
         component={Login}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPassword}
         options={{headerShown: false}}
       />
       <Stack.Screen

@@ -72,7 +72,7 @@ const CardCutiApproval = ({
             database()
               .ref(`/cuti/`)
               .child(id)
-              .update({status_cuti: 'UNAPPROVED'})
+              .update({status_cuti: 'REJECTED'})
               .then(() => {
                 showMessage({message: 'Success rejected !', type: 'success'});
               })
@@ -99,7 +99,6 @@ const CardCutiApproval = ({
           .child(userId)
           .update({cutiTahunan: sisaCuti})
           .then(() => {
-            // console.log('update');
             showMessage({message: 'Success approved !', type: 'success'});
           })
           .catch((err) => console.log(err));
@@ -113,7 +112,6 @@ const CardCutiApproval = ({
       .once('value')
       .then((snapshot) => {
         let data = snapshot.val();
-        console.log('🚀 ~ file: index.js ~ line 60 ~ .then ~ data', data);
         setJabatan(data.jabatan);
       })
       .catch((err) => console.log(err));
@@ -124,7 +122,17 @@ const CardCutiApproval = ({
       <View style={styles.card}>
         <View style={styles.wrapTitle}>
           <Text>{nama}</Text>
-          <Text>{status}</Text>
+          <Text
+            style={{
+              color:
+                status == 'REJECTED'
+                  ? 'salmon'
+                  : status == 'PROCESSING'
+                  ? '#CD9543'
+                  : '#4e7c03',
+            }}>
+            {status}
+          </Text>
         </View>
         <Text style={styles.textDept}>{dept}</Text>
         <View style={styles.wrapCuti}>
@@ -138,12 +146,12 @@ const CardCutiApproval = ({
         <TouchableOpacity
           style={{
             backgroundColor:
-              status == 'APPROVED' || status == 'UNAPPROVED' ? 'grey' : 'pink',
+              status == 'APPROVED' || status == 'REJECTED' ? 'grey' : 'pink',
             paddingVertical: 4,
             paddingHorizontal: 8,
             borderRadius: 4,
           }}
-          disabled={status == 'APPROVED' || status == 'UNAPPROVED'}
+          disabled={status == 'APPROVED' || status == 'REJECTED'}
           onPress={() => handleAccept(id, userId)}>
           <Text style={styles.textBtn}>Accept</Text>
         </TouchableOpacity>
@@ -152,14 +160,12 @@ const CardCutiApproval = ({
         <TouchableOpacity
           style={{
             backgroundColor:
-              status == 'APPROVED' || status == 'UNAPPROVED'
-                ? 'grey'
-                : 'skyblue',
+              status == 'APPROVED' || status == 'REJECTED' ? 'grey' : 'skyblue',
             paddingVertical: 4,
             paddingHorizontal: 8,
             borderRadius: 4,
           }}
-          disabled={status == 'APPROVED' || status == 'UNAPPROVED'}
+          disabled={status == 'APPROVED' || status == 'REJECTED'}
           onPress={() => handleReject(id)}>
           <Text style={styles.textBtn}>Reject</Text>
         </TouchableOpacity>

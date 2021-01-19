@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -23,33 +24,51 @@ const User = ({navigation}) => {
     const getData = database()
       .ref('/users')
       .on('value', (snapshot) => {
-        console.log('User data: ', snapshot.val());
         const items = Array.from(Object.values(snapshot.val()));
         setData(items);
         setLoading(false);
       });
 
     if (user) {
-      // console.log('User email: ', user.uid);
       setCurrentUserId(user.uid);
     }
   }, []);
 
   const deleteUser = (userId) => {
-    database()
-      .ref(`/users/`)
-      .child(userId)
-      .update({status: 'tidak-aktif'})
-      .then(() => {
-        // console.log('update');
-        setLoading(false);
-        showMessage({message: 'Success deleted !', type: 'success'});
-      })
-      .catch((err) => console.log(err));
+    Alert.alert(
+      'Hapus Akun',
+      'Apakah Anda Yakin ?',
+      [
+        {
+          text: 'Tidak',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {
+          text: 'Ya',
+          onPress: () => {
+            database()
+              .ref(`/users/`)
+              .child(userId)
+              .update({status: 'tidak-aktif'})
+              .then(() => {
+                setLoading(false);
+                showMessage({
+                  message: 'Success deleted !',
+                  type: 'success',
+                  autoHide: false,
+                });
+              })
+              .catch((err) => console.log(err));
+          },
+        },
+      ],
+      {
+        cancelable: false,
+      },
+    );
   };
 
-  console.log(data);
-  // console.log('data item', dataItem);
   return (
     <>
       {loading ? (
@@ -66,7 +85,6 @@ const User = ({navigation}) => {
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
             {data.map((item, i) => {
-              // console.log('User -> id', item._id);
               if (item.status === 'aktif' && item._id !== currentUserId) {
                 return (
                   <CardUser
