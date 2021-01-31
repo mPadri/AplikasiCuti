@@ -93,7 +93,7 @@ const AjukanCutiHamil = ({navigation}) => {
       jumlah_hari: 90,
       start_cuti: dateAwal,
       end_cuti: days,
-      status_cuti: 'PROCESSING',
+      status_cuti: 'PROCESS',
       jenis_cuti: selected,
     };
 
@@ -101,7 +101,7 @@ const AjukanCutiHamil = ({navigation}) => {
       .ref(`/cuti/${cutiUid}`)
       .set(data)
       .then(() => {
-        navigation.goBack();
+        navigation.popToTop();
         showMessage({message: 'Success !', type: 'success'});
       })
       .catch((err) => showMessage({message: 'Failed !', type: 'danger'}));

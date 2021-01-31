@@ -127,7 +127,7 @@ const CardCutiApproval = ({
               color:
                 status == 'REJECTED'
                   ? 'salmon'
-                  : status == 'PROCESSING'
+                  : status == 'PROCESS'
                   ? '#CD9543'
                   : '#4e7c03',
             }}>

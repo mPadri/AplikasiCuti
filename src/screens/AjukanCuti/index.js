@@ -101,7 +101,7 @@ const AjukanCuti = ({navigation}) => {
       jumlah_hari: days,
       start_cuti: dateAwal,
       end_cuti: dateAkhir,
-      status_cuti: 'PROCESSING',
+      status_cuti: 'PROCESS',
       jenis_cuti: selected,
     };
 
