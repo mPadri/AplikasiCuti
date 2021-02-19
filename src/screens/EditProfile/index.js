@@ -122,6 +122,7 @@ const EditProfile = ({navigation}) => {
             padding: 4,
           }}
           placeholder="Password"
+          secureTextEntry={true}
           value={currentPassword}
           onChangeText={(value) => setCurrentPassword(value)}
         />
@@ -136,6 +137,7 @@ const EditProfile = ({navigation}) => {
             padding: 4,
           }}
           placeholder="Password"
+          secureTextEntry={true}
           value={newPassword}
           onChangeText={(value) => setNewPassword(value)}
         />

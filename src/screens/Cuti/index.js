@@ -91,10 +91,7 @@ const Cuti = ({navigation}) => {
             ) : null}
           </View>
           <View style={{height: 24}} />
-          {isEmpty ? (
-            <EmptyCuti />
-          ) : (
-            <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView showsVerticalScrollIndicator={false}>
               {data.map((el, idx) => {
                 if (user.uid == el.id_user) {
                   return (
@@ -113,7 +110,6 @@ const Cuti = ({navigation}) => {
                 }
               })}
             </ScrollView>
-          )}
         </View>
       )}
     </>

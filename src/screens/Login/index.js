@@ -103,6 +103,7 @@ const Login = ({navigation}) => {
             underlineColorAndroid="#d4d4d4"
             value={email}
             onChangeText={(value) => setEmail(value)}
+            keyboardType='email-address'
           />
           <TextInput
             placeholder="Password"

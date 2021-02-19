@@ -60,7 +60,7 @@ const ApprovalOpt = ({navigation}) => {
           ) : (
             <ScrollView showsVerticalScrollIndicator={false}>
               {data.map((el, idx) => {
-                if (el.jabatan == 'Leader' || el.jabatan == 'HRD')
+                if (el.jabatan == 'Leader' || el.jabatan == 'HRD'|| el.dept == 'Finance' || el.jabatan == 'Operation')
                   return (
                     <CardCutiApproval
                       key={idx}

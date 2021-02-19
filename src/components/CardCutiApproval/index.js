@@ -27,6 +27,7 @@ const CardCutiApproval = ({
   useEffect(() => {
     getCurrentUser();
   }, []);
+
   const handleAccept = (id, userId) => {
     Alert.alert(
       'ACCEPT',
@@ -40,14 +41,28 @@ const CardCutiApproval = ({
         {
           text: 'Ya',
           onPress: () => {
+            console.log('id cuti',id)
             database()
+            .ref(`/cuti/${id}`)
+            .once('value')
+            .then((snapshot)=>{
+              const data = snapshot.val();
+              console.log('data cuti',data)
+              database()
               .ref(`/cuti/`)
               .child(id)
               .update({status_cuti: 'APPROVED'})
               .then(() => {
-                updateCutiUser(userId);
+                if(data.jenis_cuti == 'Cuti Hamil'){
+                  showMessage({message: 'Success approved !', type: 'success'});
+                }else{
+                  updateCutiUser(userId);
+                }
               })
               .catch((err) => console.log(err));
+            })
+            .catch(err=>console.log(err))
+            
           },
         },
       ],
@@ -93,6 +108,11 @@ const CardCutiApproval = ({
       .then((snapshot) => {
         const data = snapshot.val();
         let sisaCuti = data.cutiTahunan - cuti;
+        // if(data.jenis_cuti=='Cuti Hamil'){
+        //   sisaCuti = data.cutiTahunan
+        // }else{
+        //   sisaCuti = data.cutiTahunan - cuti;
+        // }
 
         database()
           .ref(`/users/`)

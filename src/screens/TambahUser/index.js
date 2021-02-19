@@ -12,6 +12,7 @@ import database from '@react-native-firebase/database';
 import Auth from '@react-native-firebase/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {showMessage} from 'react-native-flash-message';
+import {Picker} from 'native-base';
 
 const TambahUser = ({navigation}) => {
   const [dataUser, setDataUser] = useState({
@@ -27,9 +28,11 @@ const TambahUser = ({navigation}) => {
   });
 
   const tambahData = (email, password) => {
+    console.log('isi data', dataUser)
     if (
       dataUser.nama &&
       dataUser.jabatan &&
+      dataUser.dept &&
       dataUser.cutiTahunan &&
       dataUser.email &&
       dataUser.password
@@ -81,6 +84,7 @@ const TambahUser = ({navigation}) => {
       });
     }
   };
+  console.log(dataUser.jabatan)
   return (
     <View style={{margin: 12}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -126,23 +130,50 @@ const TambahUser = ({navigation}) => {
         </View>
         <View style={{height: 6}} />
         <Text style={styles.title}>Jabatan</Text>
-        <TextInput
+        {/* <TextInput
           underlineColorAndroid="grey"
           style={{
             padding: 4,
           }}
           value={dataUser.jabatan}
           onChangeText={(value) => setDataUser({...dataUser, jabatan: value})}
-        />
+        /> */}
+
+<Picker
+        note
+        mode="dialog"
+        selectedValue={dataUser.jabatan}
+        onValueChange={(value) => setDataUser({...dataUser, jabatan: value})}>
+        <Picker.Item label="Pilih Jabatan" value="" />
+        <Picker.Item label="Staff" value="Staff" />
+        <Picker.Item label="HRD" value="HRD" />
+        <Picker.Item label="Leader" value="Leader" />
+        <Picker.Item label="Operation" value="Operation" />
+      </Picker>
         <Text style={styles.title}>Departemen</Text>
-        <TextInput
+        {/* <TextInput
           underlineColorAndroid="grey"
           style={{
             padding: 4,
           }}
           value={dataUser.dept}
           onChangeText={(value) => setDataUser({...dataUser, dept: value})}
-        />
+        /> */}
+        <Picker
+        note
+        mode="dialog"
+        selectedValue={dataUser.dept}
+        onValueChange={(value) => setDataUser({...dataUser, dept: value})}>
+        
+        <Picker.Item label="Pilih Department" value="" />
+        <Picker.Item label="Mobile App Developer" value="Mobile App Developer" />
+        <Picker.Item label="Front End Developer" value="Front End Developer" />
+        <Picker.Item label="Back End Developer" value="Back End Developer" />
+        <Picker.Item label="UI/UX" value="UI/UX" />
+        <Picker.Item label="HRD" value="HRD" />
+        <Picker.Item label="Finance" value="Finance" />
+        <Picker.Item label="Operation" value="Operation" />
+      </Picker>
         <Text style={styles.title}>Cuti Tahunan</Text>
         <TextInput
           underlineColorAndroid="grey"
