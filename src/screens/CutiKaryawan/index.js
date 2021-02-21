@@ -18,9 +18,11 @@ const CutiKaryawan = ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const user = Auth().currentUser;
   const isEmpty = data.length == 0;
+  const [jabatan, setJabatan] = useState('');
 
   useEffect(() => {
     getDataCuti();
+    getCurrentUser();
 
     if (user) {
       setUserId(user.uid);
@@ -48,6 +50,17 @@ const CutiKaryawan = ({navigation}) => {
       });
   };
 
+  const getCurrentUser = () => {
+    database()
+      .ref(`users/${user.uid}`)
+      .once('value')
+      .then((snapshot) => {
+        let data = snapshot.val();
+        setJabatan(data.jabatan);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       {loading ? (
@@ -57,24 +70,40 @@ const CutiKaryawan = ({navigation}) => {
           {isEmpty ? (
             <EmptyCuti />
           ) : (
-            <ScrollView showsVerticalScrollIndicator={false}>
-              {data.map((el, idx) => {
-                return (
-                  <CardCuti
-                    key={idx}
-                    id={el._id}
-                    userId={el.id_user}
-                    nama={el.nama}
-                    status={el.status_cuti}
-                    dept={el.dept}
-                    tglCuti={`${el.start_cuti} - ${el.end_cuti}`}
-                    cuti={el.jumlah_hari}
-                    jenisCuti={el.jenis_cuti}
-                    jabatan={el.jabatan}
-                  />
-                );
-              })}
-            </ScrollView>
+            <>
+              {jabatan == 'HRD' && (
+                <View style={{flexDirection: 'row'}}>
+                  <TouchableOpacity
+                    style={styles.btnCutiFilter}
+                    onPress={() => navigation.navigate('FilterPage')}>
+                    <Text style={styles.textBtn}>Filter Tahun</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.btnCutiFilterNama}
+                    onPress={() => navigation.navigate('FilterNama')}>
+                    <Text style={styles.textBtn}>Filter Nama</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              <ScrollView showsVerticalScrollIndicator={false}>
+                {data.map((el, idx) => {
+                  return (
+                    <CardCuti
+                      key={idx}
+                      id={el._id}
+                      userId={el.id_user}
+                      nama={el.nama}
+                      status={el.status_cuti}
+                      dept={el.dept}
+                      tglCuti={`${el.start_cuti} - ${el.end_cuti}`}
+                      cuti={el.jumlah_hari}
+                      jenisCuti={el.jenis_cuti}
+                      jabatan={el.jabatan}
+                    />
+                  );
+                })}
+              </ScrollView>
+            </>
           )}
         </View>
       )}
@@ -102,5 +131,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
     fontWeight: '400',
+  },
+  btnCutiFilter: {
+    backgroundColor: '#05f09d',
+    width: '35%',
+    borderRadius: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    elevation: 4,
+    marginLeft: 6,
+    marginBottom: 16,
+  },
+  btnCutiFilterNama: {
+    backgroundColor: '#059af0',
+    width: '35%',
+    borderRadius: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    elevation: 4,
+    marginLeft: 6,
+    marginBottom: 16,
   },
 });

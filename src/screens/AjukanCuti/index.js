@@ -34,9 +34,8 @@ const AjukanCuti = ({navigation}) => {
   useEffect(() => {
     getCurrentUser();
     // setTimeout(()=>{
-      
+
     // },3000)
-    
   }, []);
 
   const makeUid = () => {
@@ -55,7 +54,7 @@ const AjukanCuti = ({navigation}) => {
       .ref(`users/${userId.uid}`)
       .once('value')
       .then((snapshot) => {
-        setLoading(false)
+        setLoading(false);
         const data = snapshot.val();
         let user = {
           uid: data._id,
@@ -99,6 +98,13 @@ const AjukanCuti = ({navigation}) => {
   };
 
   const addCuti = (days) => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+
+    today = mm + '-' + dd + '-' + yyyy;
+
     let data = {
       _id: cutiUid,
       id_user: dataUser.uid,
@@ -110,6 +116,7 @@ const AjukanCuti = ({navigation}) => {
       end_cuti: dateAkhir,
       status_cuti: 'PROCESS',
       jenis_cuti: selected,
+      createdAt: today,
     };
 
     database()
@@ -130,82 +137,84 @@ const AjukanCuti = ({navigation}) => {
     }
   };
 
-  console.log('cutiUID', cutiUid)
+  console.log('cutiUID', cutiUid);
   return (
     <>
-      {
-        loading ? <LoadingPanel /> : <View style={{margin: 12}}>
-        {dataUser.jenis_kelamin == 'Perempuan' && (
-          <TouchableOpacity
-            style={styles.btnCutiHamil}
-            onPress={() => navigation.navigate('AjukanCutiHamil')}>
-            <Text style={styles.textBtnHamil}>Ajukan Cuti Hamil</Text>
-          </TouchableOpacity>
-        )}
-        <Text style={styles.title}>Nama</Text>
-        <TextInput
-          underlineColorAndroid="grey"
-          style={{
-            padding: 4,
-          }}
-          placeholder="Nama"
-          value={dataUser.nama}
-          editable={false}
-        />
-        <View style={{height: 12}} />
-        <Text style={styles.title}>Jabatan</Text>
-        <TextInput
-          underlineColorAndroid="grey"
-          style={{
-            padding: 4,
-          }}
-          placeholder="Jabatan"
-          value={dataUser.jabatan}
-          editable={false}
-        />
-        <View style={{height: 12}} />
-        <Text style={styles.title}>Departmen</Text>
-        <TextInput
-          underlineColorAndroid="grey"
-          style={{
-            padding: 4,
-          }}
-          placeholder="Departmen"
-          value={dataUser.dept}
-          editable={false}
-        />
-        <View style={{height: 12}} />
-  
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View>
-            <Text style={styles.title}>Awal Cuti</Text>
-  
-            <DatePicker
-              date={dateAwal}
-              mode="date"
-              placeholder="select date"
-              format="YYYY-MM-DD"
-              minDate={new Date()}
-              onDateChange={(newDate) => setDateAwal(newDate)}
-            />
+      {loading ? (
+        <LoadingPanel />
+      ) : (
+        <View style={{margin: 12}}>
+          {dataUser.jenis_kelamin == 'Perempuan' && (
+            <TouchableOpacity
+              style={styles.btnCutiHamil}
+              onPress={() => navigation.navigate('AjukanCutiHamil')}>
+              <Text style={styles.textBtnHamil}>Ajukan Cuti Hamil</Text>
+            </TouchableOpacity>
+          )}
+          <Text style={styles.title}>Nama</Text>
+          <TextInput
+            underlineColorAndroid="grey"
+            style={{
+              padding: 4,
+            }}
+            placeholder="Nama"
+            value={dataUser.nama}
+            editable={false}
+          />
+          <View style={{height: 12}} />
+          <Text style={styles.title}>Jabatan</Text>
+          <TextInput
+            underlineColorAndroid="grey"
+            style={{
+              padding: 4,
+            }}
+            placeholder="Jabatan"
+            value={dataUser.jabatan}
+            editable={false}
+          />
+          <View style={{height: 12}} />
+          <Text style={styles.title}>Departmen</Text>
+          <TextInput
+            underlineColorAndroid="grey"
+            style={{
+              padding: 4,
+            }}
+            placeholder="Departmen"
+            value={dataUser.dept}
+            editable={false}
+          />
+          <View style={{height: 12}} />
+
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View>
+              <Text style={styles.title}>Awal Cuti</Text>
+
+              <DatePicker
+                date={dateAwal}
+                mode="date"
+                placeholder="select date"
+                format="YYYY-MM-DD"
+                minDate={new Date()}
+                onDateChange={(newDate) => setDateAwal(newDate)}
+              />
+            </View>
+            <View>
+              <Text style={styles.title}>Akhir Cuti</Text>
+
+              <DatePicker
+                date={dateAkhir}
+                mode="date"
+                placeholder="select date"
+                format="YYYY-MM-DD"
+                minDate={new Date()}
+                onDateChange={(newDate) => setDateAkhir(newDate)}
+              />
+            </View>
           </View>
-          <View>
-            <Text style={styles.title}>Akhir Cuti</Text>
-  
-            <DatePicker
-              date={dateAkhir}
-              mode="date"
-              placeholder="select date"
-              format="YYYY-MM-DD"
-              minDate={new Date()}
-              onDateChange={(newDate) => setDateAkhir(newDate)}
-            />
-          </View>
-        </View>
-  
-        <View style={{height: 12}} />
-        <Text style={styles.title}>Jenis Cuti</Text>
-        {/* <Picker
+
+          <View style={{height: 12}} />
+          <Text style={styles.title}>Jenis Cuti</Text>
+          {/* <Picker
           note
           mode="dialog"
           selectedValue={selected}
@@ -213,21 +222,20 @@ const AjukanCuti = ({navigation}) => {
           <Picker.Item label="Cuti Tahunan" value="Cuti Tahunan" />
           <Picker.Item label="Cuti Hamil" value="Cuti Hamil" />
         </Picker> */}
-        <TextInput
-          underlineColorAndroid="grey"
-          style={{
-            padding: 4,
-          }}
-          value={selected}
-          editable={false}
-        />
-  
-        <View style={{height: 10}} />
-        <Button color="#CD9543" title="SIMPAN" onPress={() => onSubmit()} />
-      </View>
-      }
+          <TextInput
+            underlineColorAndroid="grey"
+            style={{
+              padding: 4,
+            }}
+            value={selected}
+            editable={false}
+          />
+
+          <View style={{height: 10}} />
+          <Button color="#CD9543" title="SIMPAN" onPress={() => onSubmit()} />
+        </View>
+      )}
     </>
-    
   );
 };
 

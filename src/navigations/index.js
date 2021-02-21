@@ -16,6 +16,8 @@ import AjukanCutiHamil from '../screens/AjukanCutiHamil';
 import Entypo from 'react-native-vector-icons/Entypo';
 import SplashScreen from '../screens/SplashScreen';
 import ForgotPassword from '../screens/ForgotPassword';
+import FilterPage from '../screens/FilterPage';
+import FilterNama from '../screens/FilterNama';
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -174,6 +176,16 @@ const Navigation = () => {
         name="ApprovalOpt"
         component={ApprovalOpt}
         options={{headerShown: true, title: 'Approval Operation'}}
+      />
+      <Stack.Screen
+        name="FilterPage"
+        component={FilterPage}
+        options={{headerShown: true, title: 'Filter Berdasarkan Tahun'}}
+      />
+      <Stack.Screen
+        name="FilterNama"
+        component={FilterNama}
+        options={{headerShown: true, title: 'Filter Berdasarkan Nama Karyawan'}}
       />
     </Stack.Navigator>
   );

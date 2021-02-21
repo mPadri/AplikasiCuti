@@ -78,6 +78,7 @@ const Cuti = ({navigation}) => {
               onPress={() => navigation.navigate('CutiKaryawan')}>
               <Text style={styles.textBtn}>Cuti Karyawan</Text>
             </TouchableOpacity>
+
             {jabatan == 'Leader' || jabatan == 'Operation' ? (
               <TouchableOpacity
                 style={styles.btnCutiApproval}
@@ -92,24 +93,24 @@ const Cuti = ({navigation}) => {
           </View>
           <View style={{height: 24}} />
           <ScrollView showsVerticalScrollIndicator={false}>
-              {data.map((el, idx) => {
-                if (user.uid == el.id_user) {
-                  return (
-                    <CardCuti
-                      key={idx}
-                      id={el._id}
-                      userId={el.id_user}
-                      nama={el.nama}
-                      status={el.status_cuti}
-                      dept={el.dept}
-                      tglCuti={`${el.start_cuti} s/d ${el.end_cuti}`}
-                      cuti={el.jumlah_hari}
-                      jenisCuti={el.jenis_cuti}
-                    />
-                  );
-                }
-              })}
-            </ScrollView>
+            {data.map((el, idx) => {
+              if (user.uid == el.id_user) {
+                return (
+                  <CardCuti
+                    key={idx}
+                    id={el._id}
+                    userId={el.id_user}
+                    nama={el.nama}
+                    status={el.status_cuti}
+                    dept={el.dept}
+                    tglCuti={`${el.start_cuti} s/d ${el.end_cuti}`}
+                    cuti={el.jumlah_hari}
+                    jenisCuti={el.jenis_cuti}
+                  />
+                );
+              }
+            })}
+          </ScrollView>
         </View>
       )}
     </>
