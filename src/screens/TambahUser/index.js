@@ -26,9 +26,39 @@ const TambahUser = ({navigation}) => {
     email: '',
     password: '',
   });
+  const [listJabatan, setListJabatan] = useState([]);
+  const [listDepartment, setListDepartment] = useState([]);
+
+  useEffect(() => {
+    getListJabatan();
+    getListDepartment();
+  }, []);
+
+  const getListJabatan = () => {
+    database()
+      .ref(`jabatan/`)
+      .once('value')
+      .then((snapshot) => {
+        let data = snapshot.val();
+        let arr = Object.values(data);
+        setListJabatan(arr);
+      })
+      .catch((err) => console.log(err));
+  };
+  const getListDepartment = () => {
+    database()
+      .ref(`department/`)
+      .once('value')
+      .then((snapshot) => {
+        let data = snapshot.val();
+        let arr = Object.values(data);
+        setListDepartment(arr);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const tambahData = (email, password) => {
-    console.log('isi data', dataUser)
+    console.log('isi data', dataUser);
     if (
       dataUser.nama &&
       dataUser.jabatan &&
@@ -84,7 +114,8 @@ const TambahUser = ({navigation}) => {
       });
     }
   };
-  console.log(dataUser.jabatan)
+  console.log('selected', dataUser.jabatan);
+  console.log('list', listJabatan);
   return (
     <View style={{margin: 12}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -130,50 +161,30 @@ const TambahUser = ({navigation}) => {
         </View>
         <View style={{height: 6}} />
         <Text style={styles.title}>Jabatan</Text>
-        {/* <TextInput
-          underlineColorAndroid="grey"
-          style={{
-            padding: 4,
-          }}
-          value={dataUser.jabatan}
-          onChangeText={(value) => setDataUser({...dataUser, jabatan: value})}
-        /> */}
 
-<Picker
-        note
-        mode="dialog"
-        selectedValue={dataUser.jabatan}
-        onValueChange={(value) => setDataUser({...dataUser, jabatan: value})}>
-        <Picker.Item label="Pilih Jabatan" value="" />
-        <Picker.Item label="Staff" value="Staff" />
-        <Picker.Item label="HRD" value="HRD" />
-        <Picker.Item label="Leader" value="Leader" />
-        <Picker.Item label="Operation" value="Operation" />
-      </Picker>
-        <Text style={styles.title}>Departemen</Text>
-        {/* <TextInput
-          underlineColorAndroid="grey"
-          style={{
-            padding: 4,
-          }}
-          value={dataUser.dept}
-          onChangeText={(value) => setDataUser({...dataUser, dept: value})}
-        /> */}
         <Picker
-        note
-        mode="dialog"
-        selectedValue={dataUser.dept}
-        onValueChange={(value) => setDataUser({...dataUser, dept: value})}>
-        
-        <Picker.Item label="Pilih Department" value="" />
-        <Picker.Item label="Mobile App Developer" value="Mobile App Developer" />
-        <Picker.Item label="Front End Developer" value="Front End Developer" />
-        <Picker.Item label="Back End Developer" value="Back End Developer" />
-        <Picker.Item label="UI/UX" value="UI/UX" />
-        <Picker.Item label="HRD" value="HRD" />
-        <Picker.Item label="Finance" value="Finance" />
-        <Picker.Item label="Operation" value="Operation" />
-      </Picker>
+          note
+          mode="dialog"
+          selectedValue={dataUser.jabatan}
+          onValueChange={(value) => setDataUser({...dataUser, jabatan: value})}>
+          <Picker.Item label="Pilih Jabatan" value="" />
+          {/* {listJabatan.map((el) => {
+            console.log(el);
+            return <Picker.Item key={el._id} label={el.nama} value={el.nama} />;
+          })} */}
+        </Picker>
+        <Text style={styles.title}>Departemen</Text>
+
+        <Picker
+          note
+          mode="dialog"
+          selectedValue={dataUser.dept}
+          onValueChange={(value) => setDataUser({...dataUser, dept: value})}>
+          <Picker.Item label="Pilih Department" value="" />
+          {listDepartment.map((el) => {
+            return <Picker.Item key={el._id} label={el.nama} value={el.nama} />;
+          })}
+        </Picker>
         <Text style={styles.title}>Cuti Tahunan</Text>
         <TextInput
           underlineColorAndroid="grey"
